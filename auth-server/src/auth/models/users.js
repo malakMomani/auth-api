@@ -23,6 +23,7 @@ users.virtual('token').get(function () {
 users.virtual('capabilities').get(function () {
   let acl = {
     user: ['read'],
+    writer: ['read' ,'create'],
     editor: ['read', 'create', 'update'],
     admin: ['read', 'create', 'update', 'delete']
   };
@@ -46,8 +47,8 @@ users.statics.authenticateBasic = async function (username, password) {
 // BEARER AUTH
 users.statics.authenticateWithToken = async function (token) {
   try {
-    const parsedToken = jwt.verify(token, process.env.SECRET);
-    const user = this.findOne({ username: parsedToken.username })
+    const parsedToken = await jwt.verify(token, process.env.SECRET);
+    const user = await this.findOne({ username: parsedToken.username })
     if (user) { return user; }
     throw new Error("User Not Found");
   } catch (e) {

@@ -3,6 +3,8 @@
 module.exports = (capability) => {
 
   return (req, res, next) => {
+    console.log(capability);
+    console.log(req.user.capabilities);
 
     try {
       if (req.user.capabilities.includes(capability)) {
