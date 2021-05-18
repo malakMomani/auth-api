@@ -2,13 +2,13 @@
 
 **Links and resourses:**
 
-[ci/cd]()
+[ci/cd](https://github.com/malakMomani/auth-api/actions)
 
 [Repo link](https://github.com/malakMomani/auth-api)
 
-[PR link]()
+[PR link](https://github.com/malakMomani/auth-api/pull/1)
 
-[Deployed heroku]()
+[Deployed heroku](https://malak-auth-api.herokuapp.com/)
 
 UML Diagram :
 
@@ -17,4 +17,3 @@ UML Diagram :
 WRRC :
 
 ![wrrc](wrrc.jpg)
-
