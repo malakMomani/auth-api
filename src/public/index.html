@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Google OAuth</title>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="483642596035-j3de36uav4c6ieddmgohdeusinvka2fa.apps.googleusercontent.com">
+
+
+    </head>
+    <body>
+        <main>
+          <a id="oauth">Google</a>
+
+        </main>
+    </body>
+    <script>
+       let URL = 'https://accounts.google.com/o/oauth2/v2/auth';
+       
+       let options = {
+           client_id:'483642596035-j3de36uav4c6ieddmgohdeusinvka2fa',
+           response_type: "code",
+           scope: "https://www.googleapis.com/auth/userinfo.profile",
+           redirect_uri : 'http://localhost:3300/oauth'
+
+       }
+
+       // k1=v1&k2=v2
+       let queryString = Object.keys(options).map(key=> {
+           return `${key}=` + encodeURIComponent(options[key])
+       }).join('&');
+       //URL?k1=v1&k2=v2
+       let authURI = `${URL}?${queryString}`;
+       let link = document.getElementById('oauth');
+       link.setAttribute('href', authURI);
+
+
+    //    console.log(link);
+    </script>
+</html>
