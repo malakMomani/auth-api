@@ -14,13 +14,14 @@
         </main>
     </body>
     <script>
-        let URL = 'https://accounts.google.com/servicelogin/signinchooser?flowName=GlifWebSignIn&flowEntry=ServiceLogin';
+       let URL = 'https://accounts.google.com/o/oauth2/v2/auth';
        
        let options = {
            client_id:'483642596035-j3de36uav4c6ieddmgohdeusinvka2fa',
-           redirect_uri : 'http://localhost:3000/oauth',
            response_type: "code",
-           scope: "https://www.googleapis.com/auth/userinfo.profile"
+           scope: "https://www.googleapis.com/auth/userinfo.profile",
+           redirect_uri : 'http://localhost:3300/oauth'
+
        }
 
        // k1=v1&k2=v2
@@ -33,6 +34,6 @@
        link.setAttribute('href', authURI);
 
 
-      //  console.log(link);
+    //    console.log(link);
     </script>
 </html>

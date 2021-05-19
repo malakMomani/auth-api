@@ -4,73 +4,63 @@ const userModel = require('../models/users.js')
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const CLIENT_ID = process.env.CLIENT_ID;
 const oauthURL = 'https://www.googleapis.com/auth/gmail.labels';
+const jwt = require('jsonwebtoken');
+const tokenUrl = 'https://oauth2.googleapis.com/token';
 
 module.exports = async (req, res, next)=>{
 
     console.log(req.query);
 
     const code = req.query.code;
-    console.log("AFTER FORM 1.CODE ======== ", code);
-    // const token = await getCodeFromOAuth(code);
-    // console.log("AFTER FORM 2.TOKEN ======== ", token);
-    // // 3. Use the access token to access the user API
-    // let remoteUser = await exchangeTokenWithUserInfo(token);
-    // console.log("AFTER FORM 3.USER ======== ", remoteUser);
-    // let [localUser, localToken] = await getLocalUser(remoteUser);
-    // req.user = localUser;
-    // req.token = localToken;
-    // next();
+    const token = await getCodeFromOAuth(code);
+    // 3. Use the access token to access the user API
+    let remoteUser = await exchangeTokenWithUserInfo(token);
+    console.log("AFTER FORM 3.USER ======== ", remoteUser);
+    let [localUser, localToken] = await getLocalUser(remoteUser);
+    req.user = localUser;
+    req.token = localToken;
+    next();
 
 }
 async function getCodeFromOAuth(code) {
     try {
-        //get request and recieve code
-        const res = await superagent.get(oauthURL);
-        // Get the code from the body
-        // const code = res.body
-        console.log(res.body);
-    } catch (er) {
-        console.log(er.message);
-    }
-}
+        const tokenResponse = await superagent.post(tokenUrl).send({
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            code: code,
+            redirect_uri:'http://localhost:3300/oauth',
+            grant_type: 'authorization_code'
 
-async function exchangeCodeWithToken(code) {
-  // tokenUrl + params
-  // response : token from github
-  try {
-      const tokenResponse = await superagent.post(tokenUrl).send({
-          client_id: CLIENT_ID,
-          client_secret: CLIENT_SECRET,
-          code: code
-      });
-      console.log("tokenResponse.body", tokenResponse.body)
-      return tokenResponse.body.access_token;
-  } catch(err) {
-      console.log(err);
-  }
+        });
+        console.log("tokenResponse.body", tokenResponse.body)
+        return tokenResponse.body.access_token;
+    } catch(err) {
+        console.log(err.message);
+    }
 }
 
 async function exchangeTokenWithUserInfo(token) {
    try {
+    const userUrl = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${token}`;
+
       const userInfo = await superagent.get(userUrl).set({
-          'Authorization': `token ${token}`,
-          'User-Agent': 'Rawan/1.0'
+          'Authorization': `Bearer ${token}`
       });
       return userInfo.body;
    } catch(err) {
-      console.log(err);
+      console.log(err.message);
    }
 }
 
 async function getLocalUser(userObj) {
   try {
       let userRecord = {
-          username: userObj.login,
+          username: userObj.name,
           password: 'oauth' 
       }
       let newUser = new userModel(userRecord);
       let user = await newUser.save();
-      let token = jwt.sign({username: user.username}, SECRET);
+      let token = jwt.sign({username: user.username}, process.env.SECRET);
       return [user, token];
   }catch(err) {
       console.log(err)

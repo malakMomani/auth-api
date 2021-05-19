@@ -43,11 +43,11 @@ authRouter.get('/secret', bearerAuth, async (req, res, next) => {
 
 authRouter.get('/oauth' , outh , async(req,res,next) =>{
 
-  console.log(req.query);
+  // console.log(req.query);
   res.cookie(req.token);
   res.set(req.token);
   res.status(201);
-  res.send(req.token);
+  res.send(req.user);
 
 })
 
