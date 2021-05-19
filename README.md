@@ -19,6 +19,7 @@ GROUP MEMBERS :
 
 UML Diagram :
 
+![uml](user-auth.png)
 ![uml](uml-auth.jpg)
 
 WRRC :
