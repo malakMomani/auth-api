@@ -35,7 +35,12 @@ app.use(authRoutes);
 
 app.use('/api/v1', v1Routes);
 app.use('/api/v2', v2Routes);
+app.use(express.static('src/public'));
 
+
+app.get('/', (req,res) =>{
+  res.sendFile('./public/index.html');
+});
 
 // Catchalls
 app.use(notFoundAuth);
