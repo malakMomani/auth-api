@@ -28,7 +28,7 @@ async function getCodeFromOAuth(code) {
             client_id: CLIENT_ID,
             client_secret: CLIENT_SECRET,
             code: code,
-            redirect_uri:'http://localhost:3300/oauth',
+            redirect_uri:'https://auth-server-malak.herokuapp.com/oauth',
             grant_type: 'authorization_code'
 
         });
