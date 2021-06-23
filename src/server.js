@@ -42,7 +42,7 @@ app.get('/', (req,res) =>{
   res.sendFile('./public/index.html');
 });
 
-// Catchalls
+// Catchalls //
 app.use(notFoundAuth);
 app.use(errorHandlerAuth);
 app.use('*', notFoundHandlerApi);
