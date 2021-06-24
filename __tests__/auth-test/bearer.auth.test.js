@@ -8,7 +8,7 @@ const Users = require('../../src/auth-server/auth/models/users.js');
 const jwt = require('jsonwebtoken');
 
 let users = {
-  admin: { username: 'admin', password: 'password' },
+  admin: { username: 'admin', password: 'password', email:'ww@gmail.com' },
 };
 
 // Pre-load our database with fake users

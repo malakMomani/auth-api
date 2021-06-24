@@ -5,7 +5,7 @@ const middleware = require('../../src/auth-server/auth/middleware/basic.js');
 const Users = require('../../src/auth-server/auth/models/users.js');
 
 let users = {
-  admin: { username: 'admin', password: 'password' },
+  admin: { username: 'admin', password: 'password', email:'ww@gmail.com', role:'admin' },
 };
 
 // Pre-load our database with fake users
