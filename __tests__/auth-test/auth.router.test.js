@@ -9,9 +9,9 @@ const bearer = require('../../src/auth-server/auth/middleware/bearer.js');
 const mockRequest = supergoose(server);
 
 let users = {
-  admin: { username: 'admin', password: 'password' },
-  editor: { username: 'editor', password: 'password' },
-  user: { username: 'user', password: 'password' },
+  admin: { username: 'admin', password: 'password', email:'aa@gmail.com' , role:'admin' },
+  editor: { username: 'editor', password: 'password', email:'bb@gmail.com', role:'editor' },
+  user: { username: 'user', password: 'password', email:'cc@gmail.com' },
 };
 
 describe('Auth Router', () => {
